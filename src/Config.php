@@ -7,6 +7,8 @@
 
 namespace Kaecyra\AppCommon;
 
+use Interop\Container\ContainerInterface;
+
 /**
  * Config parser
  *
@@ -16,7 +18,7 @@ namespace Kaecyra\AppCommon;
  * @author Tim Gunter <tim@vanillaforums.com>
  * @package app-common
  */
-class Config {
+class Config implements ContainerInterface {
 
     /**
      * Data store
@@ -149,6 +151,15 @@ class Config {
     public function set($setting, $value = null) {
         $this->store->set($setting, $value);
         $this->dirty = true;
+    }
+
+    /**
+     * Check if setting exists
+     *
+     * @param string $setting
+     */
+    public function has($setting) {
+        
     }
 
     /**

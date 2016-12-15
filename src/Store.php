@@ -7,6 +7,8 @@
 
 namespace Kaecyra\AppCommon;
 
+use Interop\Container\ContainerInterface;
+
 /**
  * Centralized data mart
  *
@@ -74,6 +76,31 @@ class Store {
     public function set($key, $value) {
         setvalr($key, $this->data, $value);
         return $value;
+    }
+
+    /**
+     * Check if key exists
+     *
+     * @param string $key
+     */
+    public function has($key) {
+        $key = trim($key);
+        $path = explode('.', $key);
+        $pathLength = count($path);
+        $target = &$this->data;
+        for ($i = 1; $i <= $pathLength; ++$i) {
+            $subKey = $path[$i - 1];
+
+            // no such key!
+            if (!isset($target[$subKey]) || ($i < $pathLength && !is_array($target[$subKey]))) {
+                return false;
+            }
+
+            if ($i < $pathLength) {
+                $target = &$target[$subKey];
+            }
+        }
+        return true;
     }
 
     /**
