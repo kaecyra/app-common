@@ -1,0 +1,25 @@
+{
+    "name": "kaecyra/app-common",
+    "description": "Common app base.",
+    "keywords": ["app-common"],
+    "homepage": "https://github.com/kaecyra/app-common",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tim Gunter",
+            "email": "tim@vanillaforums.com",
+            "homepage": "https://vanillaforums.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-4": { 
+            "Kaecyra\\AppCommon\\": "src"
+        },
+        "files": [
+            "src/map/functions.general.php"
+        ]
+    }
+}
