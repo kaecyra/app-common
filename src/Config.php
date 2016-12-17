@@ -86,11 +86,13 @@ class Config implements ContainerInterface {
     /**
      * Special config shortcut for application config
      *
+     * @param string $workingDir
      * @param string $file
      * @return Config
      */
-    public static function app($file) {
-        return self::file($file, true, true);
+    public static function app($workingDir, $file) {
+        $workingFile = rtrim($workingDir, '/').'/'.ltrim($file, '/');
+        return self::file($workingFile, true, true);
     }
 
     /**
@@ -159,7 +161,7 @@ class Config implements ContainerInterface {
      * @param string $setting
      */
     public function has($setting) {
-        
+
     }
 
     /**
