@@ -9,13 +9,16 @@
 
 namespace Kaecyra\AppCommon\Log;
 
+use Interop\Container\ContainerInterface;
+
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * A logger that can dispatch log events to many sub-loggers.
  *
  */
-class AggregateLogger extends BaseLogger {
+class AggregateLogger extends BaseLogger implements ContainerInterface {
 
     /**
      * List of sub-loggers and their priorities
@@ -38,7 +41,29 @@ class AggregateLogger extends BaseLogger {
 
         $level = $level ?? self::DEBUG;
         $key = $key ?? spl_object_hash($logger);
-        $this->loggers[$key] = [$logger, static::levelPriority($level)];
+        $this->loggers[$key] = [
+            'logger'    => $logger,
+            'priority'  => static::levelPriority($level),
+            'key'       => $key,
+            'enabled'   => true
+        ];
+        return $this;
+    }
+
+    /**
+     * Remove a logger by passing in its key.
+     *
+     * @param type $key
+     * @param type $trigger
+     * @return $this
+     */
+    public function removeLogger(string $key, $trigger = true) {
+        if ($trigger && !$this->has($key)) {
+            trigger_error("Logger $key was removed without being added.");
+        }
+
+        unset($this->loggers[$key]);
+
         return $this;
     }
 
@@ -49,7 +74,7 @@ class AggregateLogger extends BaseLogger {
      * @param bool $trigger
      * @return AggregateLogger
      */
-    public function removeLogger(LoggerInterface $logger, $trigger = true) {
+    public function removeLoggerByInstance($logger, $trigger = true) {
         foreach ($this->loggers as $key => $addedLogger) {
             if ($addedLogger[0] === $logger) {
                 unset($this->loggers[$key]);
@@ -66,20 +91,45 @@ class AggregateLogger extends BaseLogger {
     }
 
     /**
-     * Remove a logger by passing in its key.
+     * Disable a logger
      *
-     * @param type $key
-     * @param type $trigger
-     * @return $this
+     * @param string $key
      */
-    public function removeLoggerByKey($key, $trigger = true) {
-        if ($trigger && !array_key_exists($key, $this->loggers)) {
-            trigger_error("Logger $key was removed without being added.");
+    public function disableLogger($key) {
+        if ($this->has($key)) {
+            $this->loggers[$key]['enabled'] = false;
         }
+    }
 
-        unset($this->loggers[$key]);
- 
-        return $this;
+    /**
+     * Enable a logger
+     *
+     * @param string $key
+     */
+    public function enableLogger($key) {
+        if ($this->has($key)) {
+            $this->loggers[$key]['enabled'] = true;
+        }
+    }
+
+    /**
+     * Get logger by key
+     *
+     * @param string $key
+     * @return LoggerInterface
+     */
+    public function get($key) {
+        return $this->loggers[$key] ?? new NullLogger;
+    }
+
+    /**
+     * Check if logger exists
+     *
+     * @param string $key
+     * @return boolean
+     */
+    public function has($key) {
+        return array_key_exists($key, $this->loggers);
     }
 
     /**
@@ -117,7 +167,10 @@ class AggregateLogger extends BaseLogger {
 
         foreach ($this->loggers as $row) {
             /* @var LoggerInterface $logger */
-            list($logger, $loggerPriority) = $row;
+            list($logger, $loggerPriority, $key, $enabled) = $row;
+            if (!$enabled) {
+                continue;
+            }
 
             if ($loggerPriority >= $levelPriority) {
                 try {
