@@ -30,28 +30,29 @@ class AggregateLogger extends BaseLogger {
      * @param string $level
      * @return AggregateLogger
      */
-    public function addLogger(LoggerInterface $logger, $level = null) {
+    public function addLogger(LoggerInterface $logger, $level = null, $key = null) {
         // Make a small attempt to prevent infinite cycles by disallowing all logger chaining.
         if ($logger instanceof AggregateLogger) {
             throw new \InvalidArgumentException("You cannot chain AggregateLoggers.", 500);
         }
 
         $level = $level ?? self::DEBUG;
-        $this->loggers[] = [$logger, static::levelPriority($level)];
+        $key = $key ?? spl_object_hash($logger);
+        $this->loggers[$key] = [$logger, static::levelPriority($level)];
         return $this;
     }
 
     /**
-     * Remove a logger that was previously added with {@link AggregateLogger::addLogger()}.
+     * Remove a logger by passing in its instance.
      *
      * @param LoggerInterface $logger
      * @param bool $trigger
      * @return AggregateLogger
      */
     public function removeLogger(LoggerInterface $logger, $trigger = true) {
-        foreach ($this->loggers as $i => $addedLogger) {
+        foreach ($this->loggers as $key => $addedLogger) {
             if ($addedLogger[0] === $logger) {
-                unset($this->loggers[$i]);
+                unset($this->loggers[$key]);
                 return $this;
             }
         }
@@ -61,6 +62,23 @@ class AggregateLogger extends BaseLogger {
             trigger_error("Logger $class was removed without being added.");
         }
 
+        return $this;
+    }
+
+    /**
+     * Remove a logger by passing in its key.
+     *
+     * @param type $key
+     * @param type $trigger
+     * @return $this
+     */
+    public function removeLoggerByKey($key, $trigger = true) {
+        if ($trigger && !array_key_exists($key, $this->loggers)) {
+            trigger_error("Logger $key was removed without being added.");
+        }
+
+        unset($this->loggers[$key]);
+ 
         return $this;
     }
 
