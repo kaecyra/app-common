@@ -15,8 +15,6 @@ use Psr\Log\AbstractLogger;
  */
 class SyslogLogger extends AbstractLogger {
 
-    use BaseLoggerTrait;
-
     /**
      * Config
      * @var array
@@ -47,7 +45,7 @@ class SyslogLogger extends AbstractLogger {
      * @return null|void
      */
     public function log($level, $message, array $context = array()) {
-        $realMessage = rtrim(self::interpolate($message, $context), "\n");
+        $realMessage = rtrim(static::interpolate($message, $context), "\n");
 
         if (isset($context['event'])) {
             $realMessage = sprintf("<%s> %s", $context['event'], $realMessage);

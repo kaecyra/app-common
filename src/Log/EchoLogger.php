@@ -15,8 +15,6 @@ use Psr\Log\AbstractLogger;
  */
 class EchoLogger extends AbstractLogger {
 
-    use BaseLoggerTrait;
-
     public function __construct($workingDir, $options = []) {
         //
     }
@@ -30,7 +28,7 @@ class EchoLogger extends AbstractLogger {
      * @return null|void
      */
     public function log($level, $message, array $context = []) {
-        $realMessage = self::interpolate($message, $context);
+        $realMessage = static::interpolate($message, $context);
         echo $realMessage;
     }
 

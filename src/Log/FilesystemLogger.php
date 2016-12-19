@@ -15,8 +15,6 @@ use Psr\Log\AbstractLogger;
  */
 class FilesystemLogger extends AbstractLogger {
 
-    use BaseLoggerTrait;
-
     /**
      * File path
      * @var string
@@ -90,7 +88,7 @@ class FilesystemLogger extends AbstractLogger {
      */
     public function log($level, $message, array $context = []) {
 
-        $realMessage = rtrim(self::interpolate($message, $context), "\n");
+        $realMessage = rtrim(static::interpolate($message, $context), "\n");
 
         if (isset($context['event'])) {
             $realMessage = sprintf("<%s> %s", $context['event'], $realMessage);
