@@ -28,8 +28,8 @@ class EchoLogger extends AbstractLogger {
      * @return null|void
      */
     public function log($level, $message, array $context = []) {
-        $realMessage = static::interpolate($message, $context);
-        echo $realMessage;
+        $realMessage = rtrim(static::interpolate($message, $context), "\n");
+        echo sprintf("%s\n", $realMessage);
     }
 
 }
