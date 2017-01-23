@@ -65,7 +65,7 @@ class FilesystemLogger extends AbstractLogger {
             }
 
             if (!is_writable($this->file)) {
-                throw new Exception("Unable to open log file '{$this->file}', not writable");
+                throw new \Exception("Unable to open log file '{$this->file}', not writable");
             }
             $this->fr = fopen($this->file, 'a');
         }
