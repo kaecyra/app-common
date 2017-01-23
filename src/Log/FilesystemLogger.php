@@ -8,12 +8,10 @@
 
 namespace Kaecyra\AppCommon\Log;
 
-use Psr\Log\AbstractLogger;
-
 /**
  * A logger that writes to the filesystem.
  */
-class FilesystemLogger extends AbstractLogger {
+class FilesystemLogger extends BaseLogger {
 
     /**
      * File path
@@ -65,7 +63,7 @@ class FilesystemLogger extends AbstractLogger {
             }
 
             if (!is_writable($this->file)) {
-                throw new Exception("Unable to open log file '{$this->file}', not writable");
+                throw new \Exception("Unable to open log file '{$this->file}', not writable");
             }
             $this->fr = fopen($this->file, 'a');
         }
@@ -75,7 +73,7 @@ class FilesystemLogger extends AbstractLogger {
      * Close file pointer
      */
     protected function closeLog() {
-        @fclose($this->fr);
+        fclose($this->fr);
     }
 
     /**
@@ -87,13 +85,7 @@ class FilesystemLogger extends AbstractLogger {
      * @return null|void
      */
     public function log($level, $message, array $context = []) {
-
         $realMessage = rtrim(static::interpolate($message, $context), "\n");
-
-        if (isset($context['event'])) {
-            $realMessage = sprintf("<%s> %s", $context['event'], $realMessage);
-        }
-
         $realMessage = sprintf("[%s] %s\n", $level, $realMessage);
 
         fwrite($this->fr, $realMessage);

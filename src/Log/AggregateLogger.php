@@ -165,16 +165,15 @@ class AggregateLogger extends BaseLogger implements ContainerInterface {
         }
         $inCall = true;
 
-        foreach ($this->loggers as $row) {
+        foreach ($this->loggers as $logger) {
             /* @var LoggerInterface $logger */
-            list($logger, $loggerPriority, $key, $enabled) = $row;
-            if (!$enabled) {
+            if (!$logger['enabled']) {
                 continue;
             }
 
-            if ($loggerPriority >= $levelPriority) {
+            if ($logger['priority'] >= $levelPriority) {
                 try {
-                    $logger->log($level, $message, $context);
+                    $logger['logger']->log($level, $message, $context);
                 } catch (\Exception $ex) {
                     $inCall = false;
                     throw $ex;

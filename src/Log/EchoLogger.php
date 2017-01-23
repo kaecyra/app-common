@@ -8,12 +8,10 @@
 
 namespace Kaecyra\AppCommon\Log;
 
-use Psr\Log\AbstractLogger;
-
 /**
  * A logger that writes to the screen.
  */
-class EchoLogger extends AbstractLogger {
+class EchoLogger extends BaseLogger {
 
     public function __construct($workingDir, $options = []) {
         //
@@ -29,7 +27,9 @@ class EchoLogger extends AbstractLogger {
      */
     public function log($level, $message, array $context = []) {
         $realMessage = rtrim(static::interpolate($message, $context), "\n");
-        echo sprintf("%s\n", $realMessage);
+        if (STDOUT) {
+            echo "{$realMessage}\n";
+        }
     }
 
 }

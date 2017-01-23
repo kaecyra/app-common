@@ -8,12 +8,10 @@
 
 namespace Kaecyra\AppCommon\Log;
 
-use Psr\Log\AbstractLogger;
-
 /**
  * A logger that writes using {@link syslog()}.
  */
-class SyslogLogger extends AbstractLogger {
+class SyslogLogger extends BaseLogger {
 
     /**
      * Config
