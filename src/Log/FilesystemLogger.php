@@ -59,7 +59,10 @@ class FilesystemLogger extends BaseLogger {
             }
 
             if (!file_exists($this->file)) {
-                touch($this->file);
+                $touched = touch($this->file);
+                if (!$touched) {
+                    throw new \Exception("Unable to open log file '{$this->file}', could not create");
+                }
             }
 
             if (!is_writable($this->file)) {
@@ -86,7 +89,7 @@ class FilesystemLogger extends BaseLogger {
      */
     public function log($level, $message, array $context = []) {
         $realMessage = rtrim(static::interpolate($message, $context), "\n");
-        $realMessage = sprintf("[%s] %s\n", $level, $realMessage);
+        $realMessage = sprintf("[%10s] %s\n", $level, $realMessage);
 
         fwrite($this->fr, $realMessage);
     }
