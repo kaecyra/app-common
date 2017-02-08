@@ -17,7 +17,7 @@ use Interop\Container\ContainerInterface;
  * @author Tim Gunter <tim@vanillaforums.com>
  * @package app-common
  */
-class Store {
+class Store implements ContainerInterface {
 
     /**
      * Data store
@@ -26,7 +26,7 @@ class Store {
     public $data;
 
     public function __construct() {
-        $this->data = [];
+        $this->flush();
     }
 
     /**
@@ -39,6 +39,15 @@ class Store {
     }
 
     /**
+     * Merge data into store
+     *
+     * @param array $data
+     */
+    public function merge($data) {
+        $this->data = array_replace_recursive($this->data, $data);
+    }
+
+    /**
      * Get data from store
      *
      * @return array
@@ -48,7 +57,16 @@ class Store {
     }
 
     /**
+     * Erase all stored data
+     *
+     */
+    public function flush() {
+        $this->data = [];
+    }
+
+    /**
      * Do we have data?
+     *
      * @return boolean
      */
     public function hasData() {
