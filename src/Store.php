@@ -69,7 +69,7 @@ class Store implements ContainerInterface {
      *
      * @return boolean
      */
-    public function hasData() {
+    public function hasData(): bool {
         return count($this->data);
     }
 
@@ -101,7 +101,7 @@ class Store implements ContainerInterface {
      *
      * @param string $key
      */
-    public function has($key) {
+    public function has($key): bool {
         $key = trim($key);
         $path = explode('.', $key);
         $pathLength = count($path);
@@ -127,7 +127,7 @@ class Store implements ContainerInterface {
      * @param string $key
      * @return boolean unset success or failure
      */
-    public function delete($key) {
+    public function delete($key): bool {
         $key = trim($key);
         $path = explode('.', $key);
         $pathLength = count($path);
@@ -137,7 +137,7 @@ class Store implements ContainerInterface {
 
             // no such key!
             if (!isset($target[$subKey]) || ($i < $pathLength && !is_array($target[$subKey]))) {
-                return;
+                return false;
             }
 
             if ($i < $pathLength) {
@@ -145,6 +145,7 @@ class Store implements ContainerInterface {
             }
         }
         unset($target[$subKey]);
+        return true;
     }
 
     /**

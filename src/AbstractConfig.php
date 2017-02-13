@@ -67,7 +67,7 @@ abstract class AbstractConfig implements ConfigInterface, ContainerInterface {
      *
      * @param string $setting
      */
-    public function has($setting) {
+    public function has($setting): bool {
         return $this->store->has($setting);
     }
 
@@ -76,9 +76,9 @@ abstract class AbstractConfig implements ConfigInterface, ContainerInterface {
      *
      * @param string $setting
      */
-    public function remove($setting) {
-        $this->store->delete($setting);
+    public function remove($setting): bool {
         $this->dirty = true;
+        return $this->store->delete($setting);
     }
 
     /**
