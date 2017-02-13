@@ -86,7 +86,7 @@ abstract class AbstractConfig implements ConfigInterface, ContainerInterface {
      *
      * @return array
      */
-    public function dump() {
+    public function dump(): array {
         return $this->store->dump();
     }
 
