@@ -19,7 +19,7 @@ class ConfigCollection extends AbstractConfig {
 
     /**
      * List of configs
-     * @var array
+     * @var \SplObjectStorage
      */
     protected $configs;
 
@@ -57,11 +57,7 @@ class ConfigCollection extends AbstractConfig {
             throw new Exception("Cannot remove configs from merged collection.");
         }
 
-        // Generate config object hash
-        $hash = spl_object_hash($config);
-
-        // Remove from config list
-        unset($this->configs[$hash]);
+        $this->configs->detach($config);
 
         return $this;
     }
