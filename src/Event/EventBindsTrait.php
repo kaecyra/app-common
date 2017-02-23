@@ -8,12 +8,12 @@
 namespace Kaecyra\AppCommon\Event;
 
 /**
- * Event aware convenience trait.
+ * Event binding convenience trait.
  *
  * @author Tim Gunter <tim@vanillaforums.com>
  * @package app-common
  */
-trait EventAwareTrait {
+trait EventBindsTrait {
 
     /**
      * Event manager
@@ -40,13 +40,14 @@ trait EventAwareTrait {
     }
 
     /**
-     * Fire events
+     * Bind to an event
      *
      * @param string $event
-     * @param mixed $arguments
+     * @param callable $handler
+     * @return type
      */
-    public function fire($event, $arguments = null) {
-        $this->getEventManager()->fire($event, $arguments);
+    public function bind(string $event, callable $handler) {
+        return $this->getEventManager()->bind($event, $handler);
     }
 
 }

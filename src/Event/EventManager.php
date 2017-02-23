@@ -47,7 +47,7 @@ class EventManager {
      * @param string $event
      * @param array $arguments optional.
      */
-    public function fire($event, $arguments = null) {
+    public function fire(string $event, array $arguments = null) {
         $arguments = (array)$arguments;
         foreach ($this->getBindings($event) as $callback) {
             if (is_callable($callback)) {
@@ -63,7 +63,7 @@ class EventManager {
      * @param object $sender
      * @param array $arguments optional.
      */
-    public function fireOff($event, $sender, $arguments = null) {
+    public function fireOff(string $event, $sender, array $arguments = null) {
         $arguments = (array)$arguments;
         array_unshift($arguments, $sender);
         return $this->fire($event, $arguments);
@@ -80,7 +80,7 @@ class EventManager {
      * @param mixed $filter
      * @param array $arguments optional.
      */
-    public function fireFilter($event, $filter, $arguments = null) {
+    public function fireFilter(string $event, $filter, array $arguments = null) {
         $arguments = (array)$arguments;
 
         array_unshift($arguments, $filter);
@@ -101,7 +101,7 @@ class EventManager {
      * EventType: Return
      * @param string $event
      */
-    public function fireReturn($event) {
+    public function fireReturn(string $event) {
         $return = [];
         $arguments = func_get_args();
         array_shift($arguments);
@@ -120,7 +120,7 @@ class EventManager {
      * @param type $event
      * @param type $arguments
      */
-    public function fireReflected($event, $arguments = null) {
+    public function fireReflected(string $event, array $arguments = null) {
         foreach ($this->getBindings($event) as $callback) {
             $pass = [];
             if (is_string($callback) && is_callable($callback)) {
@@ -145,7 +145,7 @@ class EventManager {
      * @param callable $callback
      * @return string|boolean:false
      */
-    public function bind($event, $callback) {
+    public function bind(string $event, callable $callback) {
         // We can't bind to something that isn't callable
         if (!is_callable($callback)) {
             return false;
@@ -171,7 +171,7 @@ class EventManager {
      * @param string $event
      * @return array
      */
-    protected function getBindings($event) {
+    protected function getBindings(string $event) {
         if (!isset($this->bindings[$event]) || !is_array($this->bindings[$event])) {
             return [];
         }
@@ -185,7 +185,7 @@ class EventManager {
      * @param string $signature
      * @return boolean successfully removed, or didn't exist
      */
-    public function unbind($event, $signature) {
+    public function unbind(string $event, string $signature) {
         if (!isset($this->bindings[$event]) || !is_array($this->bindings[$event]) || !array_key_exists($signature, $this->bindings[$event])) {
             return false;
         }
@@ -200,7 +200,7 @@ class EventManager {
      * @param Reflector $reflect
      * @param array $arguments
      */
-    protected function reflect($reflect, $arguments) {
+    protected function reflect($reflect, array $arguments) {
         $pass = [];
         foreach ($reflect->getParameters() as $param) {
             if (isset($arguments[$param->getName()])) {
@@ -218,7 +218,7 @@ class EventManager {
      * @param callable $callback
      * @return string
      */
-    public function hash($callback) {
+    public function hash(callable $callback) {
 
         // Global function calls
         if (is_string($callback)) {
@@ -251,7 +251,7 @@ class EventManager {
      * @param integer $tickFreq optional
      * @return boolean
      */
-    public function enableTicks($tickFreq = null) {
+    public function enableTicks(int $tickFreq = null) {
 
         if (is_null($tickFreq)) {
             $tickFreq = self::$tickFreq;
