@@ -8,12 +8,12 @@
 namespace Kaecyra\AppCommon\Event;
 
 /**
- * Event firing interface
+ * Event aware interface
  *
  * @author Tim Gunter <tim@vanillaforums.com>
  * @package app-common
  */
-interface EventFiresInterface {
+interface EventAwareInterface {
 
     /**
      * Set event manager.
@@ -26,6 +26,15 @@ interface EventFiresInterface {
      * Get event manager.
      */
     public function getEventManager(): EventManager;
+
+    /**
+     * Register an event binding
+     *
+     * @param string $event
+     * @param callable $handler
+     * @return string|boolean:false
+     */
+    public function bind(string $event, callable $handler);
 
     /**
      * Fire an event
