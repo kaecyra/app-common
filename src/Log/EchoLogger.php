@@ -10,6 +10,9 @@ namespace Kaecyra\AppCommon\Log;
 
 /**
  * A logger that writes to the screen.
+ *
+ * @package app-common
+ * @since 1.0
  */
 class EchoLogger extends BaseLogger {
 

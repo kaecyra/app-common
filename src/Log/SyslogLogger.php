@@ -10,6 +10,9 @@ namespace Kaecyra\AppCommon\Log;
 
 /**
  * A logger that writes using {@link syslog()}.
+ *
+ * @package app-common
+ * @since 1.0
  */
 class SyslogLogger extends BaseLogger {
 

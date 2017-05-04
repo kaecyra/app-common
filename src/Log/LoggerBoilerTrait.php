@@ -15,6 +15,8 @@ use Psr\Log\LogLevel;
 /**
  * A trait that provides getLogger() and NullLogger passthru functionality.
  *
+ * @package app-common
+ * @since 1.0
  */
 trait LoggerBoilerTrait {
 

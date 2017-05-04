@@ -10,6 +10,9 @@ namespace Kaecyra\AppCommon\Log;
 
 /**
  * A logger that writes to the filesystem.
+ *
+ * @package app-common
+ * @since 1.0
  */
 class FilesystemLogger extends BaseLogger {
 

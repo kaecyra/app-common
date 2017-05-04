@@ -13,6 +13,9 @@ use Psr\Log\AbstractLogger;
 
 /**
  * A logger helper trait to provide context replacement features.
+ *
+ * @package app-common
+ * @since 1.0
  */
 abstract class BaseLogger extends AbstractLogger {
 

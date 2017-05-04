@@ -17,6 +17,8 @@ use Psr\Log\NullLogger;
 /**
  * A logger that can dispatch log events to many sub-loggers.
  *
+ * @package app-common
+ * @since 1.0
  */
 class AggregateLogger extends BaseLogger implements ContainerInterface {
 
