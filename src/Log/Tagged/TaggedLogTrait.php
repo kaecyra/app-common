@@ -50,7 +50,7 @@ trait TaggedLogTrait {
      *
      * @param string|Callable $logTag
      */
-    protected function setLogTag($logTag) {
+    public function setLogTag($logTag) {
         $this->logTag = $logTag;
     }
 
