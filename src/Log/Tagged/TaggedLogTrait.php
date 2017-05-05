@@ -28,7 +28,7 @@ trait TaggedLogTrait {
      * @param string $message
      * @param array $context
      */
-    public function tLog(string $level, string $message, array $context) {
+    public function tLog(string $level, string $message, array $context = []) {
         $logtag = $this->getLogTag();
         if (is_array($message) || is_object($message)) {
             $message = print_r($message, true);
@@ -42,7 +42,7 @@ trait TaggedLogTrait {
      * @return string
      */
     protected function getLogTag() {
-        return is_callable($this->logTag) ? $this->logtag() : $this->logTag;
+        return is_callable($this->logTag) ? $this->logTag() : $this->logTag;
     }
 
     /**
