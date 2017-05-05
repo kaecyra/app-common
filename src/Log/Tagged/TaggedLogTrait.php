@@ -42,7 +42,7 @@ trait TaggedLogTrait {
      * @return string
      */
     protected function getLogTag() {
-        return is_callable($this->logTag) ? $this->logTag() : $this->logTag;
+        return is_callable($this->logTag) ? call_user_func($this->logTag) : $this->logTag;
     }
 
     /**
