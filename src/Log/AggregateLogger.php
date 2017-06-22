@@ -9,7 +9,7 @@
 
 namespace Kaecyra\AppCommon\Log;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;

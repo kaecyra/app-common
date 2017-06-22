@@ -7,7 +7,7 @@
 
 namespace Kaecyra\AppCommon;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * Abstract Config
