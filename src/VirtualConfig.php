@@ -58,7 +58,7 @@ class VirtualConfig extends AbstractConfig {
         $config = [
             'conf' => $conf
         ];
-        return new FileConfig($config);
+        return new VirtualConfig($config);
     }
 
     /**

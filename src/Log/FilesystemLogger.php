@@ -92,7 +92,7 @@ class FilesystemLogger extends BaseLogger {
      */
     public function log($level, $message, array $context = []) {
         $realMessage = rtrim(static::interpolate($message, $context), "\n");
-        $realMessage = sprintf("[%10s] %s\n", $level, $realMessage);
+        $realMessage = sprintf("[ %9s ] %s\n", $level, $realMessage);
 
         fwrite($this->fr, $realMessage);
     }
