@@ -38,7 +38,10 @@ class FilesystemLogger extends BaseLogger {
         $this->extra = $options;
         $this->extra['dir'] = $workingDir;
 
-        $this->file = rtrim($workingDir, '/').'/'.ltrim($this->extra['file'], '/');
+        $this->file = $this->extra['file'];
+        if (substr($this->file, 0, 1) !== '/') {
+            $this->file = rtrim($workingDir, '/') .'/'. $this->file;
+        }
         $this->openLog();
     }
 
