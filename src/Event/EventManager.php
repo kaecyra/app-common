@@ -100,11 +100,11 @@ class EventManager {
      *
      * EventType: Return
      * @param string $event
+     * @param array $arguments
      */
-    public function fireReturn(string $event) {
+    public function fireReturn(string $event, array $arguments = null) {
         $return = [];
-        $arguments = func_get_args();
-        array_shift($arguments);
+        $arguments = (array)$arguments;
 
         foreach ($this->getBindings($event) as $callback) {
             if (is_callable($callback)) {

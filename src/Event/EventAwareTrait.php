@@ -93,8 +93,8 @@ trait EventAwareTrait {
      * EventType: Return
      * @param string $event
      */
-    public function fireReturn(string $event) {
-        return $this->getEventManager()->fireReturn($event);
+    public function fireReturn(string $event, array $arguments = null) {
+        return $this->getEventManager()->fireReturn($event, $arguments);
     }
 
     /**
