@@ -34,7 +34,7 @@ class AggregateLogger extends BaseLogger implements ContainerInterface {
      */
     public function rotate() {
         foreach ($this->loggers as $key => &$logger) {
-            $logger->rotate();
+            $logger['logger']->rotate();
         }
     }
 
