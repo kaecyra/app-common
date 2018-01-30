@@ -32,12 +32,10 @@ class AggregateLogger extends BaseLogger implements ContainerInterface {
      * Delete all loggers
      *
      */
-    public function clearLoggers() {
-        $loggers = array_keys($this->loggers);
-        foreach ($loggers as $logger) {
-            unset($this->loggers[$logger]);
+    public function rotate() {
+        foreach ($this->loggers as $key => &$logger) {
+            $logger->rotate();
         }
-        $this->loggers = [];
     }
 
     /**

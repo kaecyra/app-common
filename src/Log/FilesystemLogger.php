@@ -86,6 +86,16 @@ class FilesystemLogger extends BaseLogger {
     }
 
     /**
+     * Rotate log file, closing and re-opening
+     *
+     * @throws \Exception
+     */
+    public function rotate() {
+        $this->closeLog();
+        $this->openLog();
+    }
+
+    /**
      * Extract known columns and save the rest as attributes.
      *
      * @param mixed $level

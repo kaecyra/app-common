@@ -66,4 +66,11 @@ abstract class BaseLogger extends AbstractLogger {
         return $final;
     }
 
+    /**
+     * No-op
+     */
+    public function rotate() {
+
+    }
+
 }
