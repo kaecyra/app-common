@@ -29,6 +29,18 @@ class AggregateLogger extends BaseLogger implements ContainerInterface {
     private $loggers = [];
 
     /**
+     * Delete all loggers
+     *
+     */
+    public function clearLoggers() {
+        $loggers = array_keys($this->loggers);
+        foreach ($loggers as $logger) {
+            unset($this->loggers[$logger]);
+        }
+        $this->loggers = [];
+    }
+
+    /**
      * Add a new logger to observe messages.
      *
      * @param LoggerInterface $logger
