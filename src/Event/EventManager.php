@@ -111,7 +111,7 @@ class EventManager {
                 $return[] = call_user_func_array($callback, $arguments);
             }
         }
-        return $return;
+        return array_filter($return);
     }
 
     /**
