@@ -33,7 +33,7 @@ trait TaggedLogTrait {
         if (is_array($message) || is_object($message)) {
             $message = print_r($message, true);
         }
-        $this->log($level, "[{$logtag}] ".$message, $context);
+        $this->log($level, "[{time}] [{$logtag}] ".$message, $context);
     }
 
     /**
