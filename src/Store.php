@@ -81,7 +81,7 @@ class Store implements ContainerInterface {
      * @return mixed
      */
     public function get($key, $default = null) {
-        return valr($key, $this->data, $default);
+        return valr(trim($key), $this->data, $default);
     }
 
     /**
@@ -92,7 +92,7 @@ class Store implements ContainerInterface {
      * @return mixed
      */
     public function set($key, $value) {
-        setvalr($key, $this->data, $value);
+        setvalr(trim($key), $this->data, $value);
         return $value;
     }
 
@@ -155,6 +155,7 @@ class Store implements ContainerInterface {
      * @param array $data
      */
     public function push($key, $data) {
+        $key = trim($key);
         if (!array_key_exists($key, $this->data) || !is_array($this->data[$key])) {
             $this->data[$key] = [];
         }
